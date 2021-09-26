@@ -1,0 +1,33 @@
+{
+    "name": "screeps-bot",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "lint": "eslint \"src/**/*.ts\"",
+        "build": "rollup -c",
+        "watch": "rollup -cw"
+    },
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^20.0.0",
+        "@rollup/plugin-node-resolve": "^13.0.4",
+        "@types/lodash": "3.10.2",
+        "@types/node": "^13.13.1",
+        "@types/screeps": "^3.2.4",
+        "@typescript-eslint/eslint-plugin": "^4.29.1",
+        "@typescript-eslint/parser": "^4.29.1",
+        "@typescript-eslint/typescript-estree": "^4.29.1",
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-import-resolver-typescript": "^2.4.0",
+        "eslint-plugin-import": "^2.24.0",
+        "eslint-plugin-prettier": "^3.4.0",
+        "lodash": "^3.10.1",
+        "prettier": "^2.3.2",
+        "rollup": "^2.56.2",
+        "rollup-plugin-typescript2": "^0.30.0",
+        "ts-node": "^10.2.0",
+        "tsconfig-paths": "^3.10.1",
+        "typescript": "^4.3.5"
+    }
+}
