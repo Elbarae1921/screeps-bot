@@ -7,7 +7,7 @@ declare global {
 
     interface CreepMemory {
         role: string;
-        target?: any;
+        target?: Source | Structure;
     }
 
     interface Creep {
@@ -19,8 +19,7 @@ declare global {
 export function injectMethods(): void {
     Creep.prototype.wander = function (): CreepMoveReturnCode {
         if (!this.fatigue) {
-            const direction = (Math.floor(Math.random() * 8) +
-                1) as DirectionConstant;
+            const direction = (Math.floor(Math.random() * 8) + 1) as DirectionConstant;
             return this.move(direction);
         } else return ERR_TIRED;
     };

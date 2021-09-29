@@ -6,7 +6,8 @@
     "scripts": {
         "lint": "eslint \"src/**/*.ts\"",
         "build": "rollup -c",
-        "watch": "rollup -cw"
+        "watch": "rollup -cw",
+        "format": "prettier --write \"src/**/*.ts\""
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^20.0.0",
