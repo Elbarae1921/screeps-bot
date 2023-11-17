@@ -14,7 +14,7 @@ export const makeCreeps = () => {
                 const spawns = room.find(FIND_MY_SPAWNS);
                 for (const spawn of spawns) {
                     if (!spawn.spawning) {
-                        Memory.index = Memory.index ? Memory.index + 1 : 0;
+                        Memory.index = (Memory.index ?? 0) + 1;
                         const body = creepBody(
                             role.maxParts,
                             role.parts,
@@ -23,7 +23,7 @@ export const makeCreeps = () => {
                         const result = spawn.spawnCreep(body, `${role.role}_${Memory.index}`, {
                             memory: { role: role.role }
                         });
-                        if (result == 0) {
+                        if (result == OK) {
                             break;
                         }
                     }

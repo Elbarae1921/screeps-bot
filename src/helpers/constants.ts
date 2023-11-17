@@ -9,7 +9,7 @@ interface IRole {
     count: number;
     maxParts: number;
     memory: CreepMemory;
-    need: (param1?: ConstructionSite[], param2?: Ruin[]) => boolean;
+    need: (param1?: ConstructionSite[], param2?: any) => boolean;
 }
 
 export const CREEP_ROLES_AND_PARTS: IRole[] = [
@@ -26,7 +26,7 @@ export const CREEP_ROLES_AND_PARTS: IRole[] = [
     {
         role: 'upgrader',
         parts: [WORK, CARRY, MOVE],
-        count: 3,
+        count: 2,
         maxParts: 20,
         memory: {
             role: 'upgrader'
@@ -36,7 +36,7 @@ export const CREEP_ROLES_AND_PARTS: IRole[] = [
     {
         role: 'builder',
         parts: [WORK, CARRY, MOVE],
-        count: 2,
+        count: 3,
         maxParts: 20,
         memory: {
             role: 'builder'
@@ -46,11 +46,11 @@ export const CREEP_ROLES_AND_PARTS: IRole[] = [
     {
         role: 'ravager',
         parts: [CARRY, MOVE],
-        count: 2,
+        count: 0,
         maxParts: 20,
         memory: {
             role: 'ravager'
         },
-        need: (_, ruins?: Ruin[]) => !!ruins?.length
+        need: (_, ruins?: (Ruin | Tombstone)[]) => !!ruins?.length
     }
 ];

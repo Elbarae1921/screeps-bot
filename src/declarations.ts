@@ -3,11 +3,13 @@
 declare global {
     interface Memory {
         index?: number;
+        lastSource?: Source;
     }
 
     interface CreepMemory {
         role: string;
         target?: Source | Structure;
+        shouldMine?: boolean;
     }
 
     interface Creep {

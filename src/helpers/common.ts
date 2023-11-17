@@ -12,11 +12,11 @@ export const getConstructionSites = (room: Room) =>
                 (PRIORITY_BUILDS[b.structureType] || 0) - (PRIORITY_BUILDS[a.structureType] || 0)
         );
 
-export const getUsefulRuins = (room: Room) =>
-    room
-        .find(FIND_RUINS)
+export const getUsefulRuins = (room: Room) => {
+    return [...room.find(FIND_RUINS), ...room.find(FIND_TOMBSTONES)]
         .filter(r => !!r.store)
         .filter(r => r.store.getUsedCapacity() > 0);
+};
 
 export const ALLOW_WITHDRAW_FROM_SPAWN = (room: Room) => {
     // return false;
