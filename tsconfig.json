@@ -1,20 +1,18 @@
 {
     "compilerOptions": {
-      "module": "ESNext",
-      "lib": ["ESNext"],
-      "declaration": true,
-      "removeComments": false,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "allowSyntheticDefaultImports": true,
-      "target": "ES2017",
-      "sourceMap": true,
-      "outDir": "dist",
-      "baseUrl": "src",
-      "incremental": true,
-      "strict": true
+        "module": "ESNext",
+        "lib": ["ESNext"],
+        "declaration": true,
+        "removeComments": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "target": "ES6",
+        "sourceMap": true,
+        "outDir": "dist",
+        "baseUrl": "src",
+        "incremental": true,
+        "strict": true
     },
-    "exclude": [
-        "node_modules"
-    ]
+    "exclude": ["node_modules", "dist"]
 }
