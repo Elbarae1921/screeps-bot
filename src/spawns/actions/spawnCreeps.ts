@@ -1,21 +1,21 @@
-import { CREEP_ROLES_AND_PARTS } from 'helpers/constants';
-import { getConstructionSites, getRooms, getUsefulRuins } from 'helpers/common';
-import { creepBody } from 'helpers/creeps';
+import { getRooms } from 'helpers/common';
+import { buildCreepBody, creepConfigByRole } from 'helpers/creeps';
 
-export const makeCreeps = () => {
+export const spawnCreeps = () => {
     const rooms = getRooms();
     for (const room of rooms) {
-        for (const role of CREEP_ROLES_AND_PARTS) {
-            if (!role.need(getConstructionSites(room), getUsefulRuins(room))) {
+        for (const role of creepConfigByRole) {
+            const requiredCount = role.count(room);
+            if (requiredCount === 0) {
                 continue;
             }
             const creeps = room.find(FIND_MY_CREEPS).filter(c => c.memory.role === role.role);
-            if (creeps.length < role.count) {
+            if (creeps.length < requiredCount) {
                 const spawns = room.find(FIND_MY_SPAWNS);
                 for (const spawn of spawns) {
                     if (!spawn.spawning) {
                         Memory.index = (Memory.index ?? 0) + 1;
-                        const body = creepBody(
+                        const body = buildCreepBody(
                             role.maxParts,
                             role.parts,
                             spawn.room.energyAvailable

@@ -1,23 +1,23 @@
-import { ALLOW_WITHDRAW_FROM_SPAWN, oppositeDirection } from 'helpers/common';
+import { allowWithdrawFromSpawn, oppositeDirection } from 'helpers/common';
 
 const isStoreStructure = (structure: AnyStructure): structure is AnyStoreStructure => {
     return !!(structure as AnyStoreStructure).store;
 };
 
 export const withdraw = (creep: Creep, resource: ResourceConstant, amount: number) => {
-    const withdrawableStructures = creep.room
-        .find(FIND_STRUCTURES)
-        .filter(isStoreStructure)
-        .filter(
+    const withdrawableStructures = creep.room.find(FIND_STRUCTURES).filter(isStoreStructure);
+
+    // prioritize withdrawal from containers
+    const containers = withdrawableStructures.filter(
+        s => s.structureType === STRUCTURE_CONTAINER
+    ) as StructureContainer[];
+
+    if (containers.length > 0) {
+        const fullContainers = containers.filter(
             (s: AnyStoreStructure) =>
                 (s.store.getUsedCapacity(resource) ?? 0) >= creep.store.getFreeCapacity()
         );
-
-    // prioritize withdrawal from containers
-    const containers = withdrawableStructures.filter(s => s.structureType === 'container');
-
-    if (containers.length > 0) {
-        const target = creep.pos.findClosestByPath(containers, {
+        const target = creep.pos.findClosestByPath(fullContainers, {
             ignoreCreeps: true
         });
 
@@ -30,10 +30,11 @@ export const withdraw = (creep: Creep, resource: ResourceConstant, amount: numbe
                 return creep.move(oppositeDirection(creep.pos.getDirectionTo(target)));
             }
         }
-    } else if (ALLOW_WITHDRAW_FROM_SPAWN(creep.room)) {
+        // only consider withdrawing from spawn if there are no containers (regardless of whether they are full or not)
+    } else if (allowWithdrawFromSpawn(creep.room)) {
         const spawns = withdrawableStructures
             .filter(s => s.structureType === 'spawn')
-            .filter(s => (s.store.getUsedCapacity() ?? 0) > creep.store.getFreeCapacity());
+            .filter(s => s.store.getFreeCapacity(resource) === 0);
 
         if (spawns) {
             const target = creep.pos.findClosestByPath(spawns, {
@@ -51,6 +52,7 @@ export const withdraw = (creep: Creep, resource: ResourceConstant, amount: numbe
             }
         }
     }
-    // otherwise, go mine energy
+    // no full structure was found, go mine energy
+    // note: this usually shouldn't happen if you have enough containers/storage. But it's here just in case
     creep.memory.shouldMine = true;
 };

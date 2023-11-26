@@ -1,4 +1,4 @@
-import { PRIORITY_BUILDS } from './constants';
+import { PRIORITY_BUILDS, STRUCTURES_TO_REPAIR } from './constants';
 
 export const getCreepsArray = () => Object.keys(Game.creeps).map(x => Game.creeps[x]);
 
@@ -18,14 +18,22 @@ export const getUsefulRuins = (room: Room) => {
         .filter(r => r.store.getUsedCapacity() > 0);
 };
 
-export const ALLOW_WITHDRAW_FROM_SPAWN = (room: Room) => {
-    // return false;
+export const allowWithdrawFromSpawn = (room: Room) => {
     const creeps = room.find(FIND_MY_CREEPS);
     const miners = creeps.filter(c => c.memory.role === 'miner').length;
-    const builders = creeps.filter(c => c.memory.role === 'builder').length;
-    const upgraders = creeps.filter(c => c.memory.role === 'upgrader').length;
-    return miners > builders + upgraders;
+    const nonMinersCount = creeps.length - miners;
+    return miners > nonMinersCount;
 };
 
 export const oppositeDirection = (direction: DirectionConstant): DirectionConstant =>
     (((direction + 3) % 8) + 1) as DirectionConstant;
+
+export const getStructuresToBeRepaired = (room: Room) => {
+    return (
+        room
+            .find(FIND_STRUCTURES)
+            // only repair structures that have 10% or more damage
+            .filter(s => (s.hitsMax - s.hits) / s.hitsMax > 0.1)
+            .filter(s => STRUCTURES_TO_REPAIR.includes(s.structureType))
+    );
+};
