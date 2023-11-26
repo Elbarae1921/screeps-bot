@@ -1,3 +1,5 @@
+import { CreepRole } from 'types';
+
 export const logCreeps = () => {
     const rooms = Object.keys(Game.rooms).map(r => Game.rooms[r]);
     let html =
@@ -7,16 +9,20 @@ export const logCreeps = () => {
                     <td></td>
                     <td>${room.name}</td>
                     <td>${
-                        room.find(FIND_MY_CREEPS).filter(c => c.memory.role == 'miner').length
+                        room.find(FIND_MY_CREEPS).filter(c => c.memory.role == CreepRole.Miner)
+                            .length
                     }</td>
                     <td>${
-                        room.find(FIND_MY_CREEPS).filter(c => c.memory.role == 'builder').length
+                        room.find(FIND_MY_CREEPS).filter(c => c.memory.role == CreepRole.Builder)
+                            .length
                     }</td>
                     <td>${
-                        room.find(FIND_MY_CREEPS).filter(c => c.memory.role == 'upgrader').length
+                        room.find(FIND_MY_CREEPS).filter(c => c.memory.role == CreepRole.Upgrader)
+                            .length
                     }</td>
                     <td>${
-                        room.find(FIND_MY_CREEPS).filter(c => c.memory.role == 'ravager').length
+                        room.find(FIND_MY_CREEPS).filter(c => c.memory.role == CreepRole.Ravager)
+                            .length
                     }</td>
                 </tr>`;
     }

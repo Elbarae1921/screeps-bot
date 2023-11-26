@@ -1,4 +1,6 @@
-const isSource = (val: Source | Structure): val is Source => {
+import { CreepTarget } from 'types';
+
+const isSource = (val: CreepTarget): val is Source => {
     return (<Source>val).energy !== undefined;
 };
 

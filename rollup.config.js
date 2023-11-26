@@ -38,7 +38,7 @@ export default {
     plugins: [
         resolve({ rootDir: 'src' }),
         commonjs(),
-        typescript({ tsconfig: './tsconfig.json' }),
+        typescript({ tsconfig: './tsconfig.json', noEmitOnError: !process.env.ROLLUP_WATCH }),
         {
             name: 'upload-code',
             generateBundle(_outputOptions, bundle) {

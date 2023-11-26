@@ -1,5 +1,7 @@
 // An example of how to extend the global/Screeps types
 
+import { CreepRole, CreepTarget } from 'types';
+
 declare global {
     interface Memory {
         index?: number;
@@ -7,8 +9,9 @@ declare global {
     }
 
     interface CreepMemory {
-        role: string;
-        target?: Source | Structure;
+        role: CreepRole;
+        formerRole?: CreepRole;
+        target?: CreepTarget;
         shouldMine?: boolean;
     }
 

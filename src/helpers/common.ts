@@ -1,3 +1,4 @@
+import { CreepRole } from 'types';
 import { PRIORITY_BUILDS, STRUCTURES_TO_REPAIR } from './constants';
 
 export const getCreepsArray = () => Object.keys(Game.creeps).map(x => Game.creeps[x]);
@@ -20,7 +21,7 @@ export const getUsefulRuins = (room: Room) => {
 
 export const allowWithdrawFromSpawn = (room: Room) => {
     const creeps = room.find(FIND_MY_CREEPS);
-    const miners = creeps.filter(c => c.memory.role === 'miner').length;
+    const miners = creeps.filter(c => c.memory.role === CreepRole.Miner).length;
     const nonMinersCount = creeps.length - miners;
     return miners > nonMinersCount;
 };

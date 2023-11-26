@@ -1,8 +1,9 @@
 import { transfer } from 'creeps/actions/transfer';
 import { getCreepsArray, getUsefulRuins } from 'helpers/common';
+import { CreepRole } from 'types';
 
 export const ravagersWorker = () => {
-    const ravagerCreeps = getCreepsArray().filter(c => c.memory.role === 'ravager');
+    const ravagerCreeps = getCreepsArray().filter(c => c.memory.role === CreepRole.Ravager);
     let ruinCount = -1;
     for (const creep of ravagerCreeps) {
         if (creep.store.getFreeCapacity() > 0) {

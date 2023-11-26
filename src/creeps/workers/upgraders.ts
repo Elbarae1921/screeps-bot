@@ -1,9 +1,10 @@
 import { temporaryMining } from 'creeps/actions/temporaryMining';
 import { withdraw } from 'creeps/actions/withdraw';
 import { getCreepsArray } from 'helpers/common';
+import { CreepRole } from 'types';
 
 export const upgradersWorker = () => {
-    const upgraderCreeps = getCreepsArray().filter(c => c.memory.role === 'upgrader');
+    const upgraderCreeps = getCreepsArray().filter(c => c.memory.role === CreepRole.Upgrader);
     for (const creep of upgraderCreeps) {
         const controller = creep.room.controller;
         if (controller) {

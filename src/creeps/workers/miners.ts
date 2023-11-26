@@ -1,9 +1,10 @@
 import { mine } from 'creeps/actions/mine';
 import { transfer } from 'creeps/actions/transfer';
 import { getCreepsArray } from 'helpers/common';
+import { CreepRole } from 'types';
 
 export const minersWorker = () => {
-    const minerCreeps = getCreepsArray().filter(c => c.memory.role === 'miner');
+    const minerCreeps = getCreepsArray().filter(c => c.memory.role === CreepRole.Miner);
     for (const creep of minerCreeps) {
         if (creep.store.getFreeCapacity() > 0) {
             mine(creep);

@@ -1,3 +1,4 @@
+import { CreepRole } from 'types';
 import { getConstructionSites, getStructuresToBeRepaired } from './common';
 
 export const buildCreepBody = (maxParts: number, parts: BodyPartConstant[], energy: number) => {
@@ -17,7 +18,7 @@ export const buildCreepBody = (maxParts: number, parts: BodyPartConstant[], ener
 };
 
 interface IRole {
-    role: string;
+    role: CreepRole;
     parts: BodyPartConstant[];
     count: (room: Room) => number;
     maxParts: number;
@@ -26,25 +27,25 @@ interface IRole {
 
 export const creepConfigByRole: IRole[] = [
     {
-        role: 'miner',
+        role: CreepRole.Miner,
         parts: [WORK, CARRY, MOVE],
         count: () => 6,
         maxParts: 20,
         memory: {
-            role: 'miner'
+            role: CreepRole.Miner
         }
     },
     {
-        role: 'upgrader',
+        role: CreepRole.Upgrader,
         parts: [WORK, CARRY, MOVE],
         count: () => 2,
         maxParts: 20,
         memory: {
-            role: 'upgrader'
+            role: CreepRole.Upgrader
         }
     },
     {
-        role: 'builder',
+        role: CreepRole.Builder,
         parts: [WORK, CARRY, MOVE],
         count: (room: Room) => {
             const constructionSites = getConstructionSites(room);
@@ -54,11 +55,11 @@ export const creepConfigByRole: IRole[] = [
         },
         maxParts: 20,
         memory: {
-            role: 'builder'
+            role: CreepRole.Builder
         }
     },
     {
-        role: 'ravager',
+        role: CreepRole.Ravager,
         parts: [CARRY, MOVE],
         count: _room => {
             // if (!getUsefulRuins(room).length) return 2;
@@ -67,7 +68,7 @@ export const creepConfigByRole: IRole[] = [
         },
         maxParts: 20,
         memory: {
-            role: 'ravager'
+            role: CreepRole.Ravager
         }
     }
 ];
