@@ -38,3 +38,10 @@ export const getStructuresToBeRepaired = (room: Room) => {
             .filter(s => STRUCTURES_TO_REPAIR.includes(s.structureType))
     );
 };
+
+export const getObjectById = <T extends _HasId>(id?: Id<T> | null) => {
+    if (id) {
+        return Game.getObjectById(id);
+    }
+    return null;
+};
