@@ -7,3 +7,9 @@ export enum CreepRole {
     Upgrader = 'upgrader',
     Ravager = 'ravager'
 }
+
+export type StorableOrWithdrawableStructure =
+    | StructureContainer
+    | StructureStorage
+    | StructureSpawn
+    | StructureExtension;

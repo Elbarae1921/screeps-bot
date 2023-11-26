@@ -1,17 +1,12 @@
-import { allowWithdrawFromSpawn, oppositeDirection } from 'helpers/common';
-
-const isWithdrawableStructure = (
-    structure: AnyStructure
-): structure is StructureContainer | StructureStorage | StructureSpawn => {
-    return (
-        structure instanceof StructureContainer ||
-        structure instanceof StructureStorage ||
-        structure instanceof StructureSpawn
-    );
-};
+import {
+    allowWithdrawFromSpawn,
+    getWithdrawableOrStorableStructures,
+    oppositeDirection
+} from 'helpers/common';
 
 export const withdraw = (creep: Creep, resource: ResourceConstant) => {
-    const withdrawableStructures = creep.room.find(FIND_STRUCTURES).filter(isWithdrawableStructure);
+    // this contains extensions as well, but we avoid withdrawing from them
+    const withdrawableStructures = getWithdrawableOrStorableStructures(creep.room);
 
     // prioritize withdrawal from containers
     const containers = withdrawableStructures.filter(
@@ -39,7 +34,7 @@ export const withdraw = (creep: Creep, resource: ResourceConstant) => {
         // only consider withdrawing from spawn if there are no containers (regardless of whether they are full or not)
     } else if (allowWithdrawFromSpawn(creep.room)) {
         const spawns = withdrawableStructures
-            .filter(s => s.structureType === 'spawn')
+            .filter(s => s.structureType === STRUCTURE_SPAWN)
             .filter(s => s.store.getFreeCapacity(resource) === 0);
 
         if (spawns) {

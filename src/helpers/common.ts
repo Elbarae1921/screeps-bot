@@ -1,4 +1,4 @@
-import { CreepRole } from 'types';
+import { CreepRole, StorableOrWithdrawableStructure } from 'types';
 import { PRIORITY_BUILDS, STRUCTURES_TO_REPAIR } from './constants';
 
 export const getCreepsArray = () => Object.keys(Game.creeps).map(x => Game.creeps[x]);
@@ -44,4 +44,22 @@ export const getObjectById = <T extends _HasId>(id?: Id<T> | null) => {
         return Game.getObjectById(id);
     }
     return null;
+};
+
+export const isWithdrawableOrStorableStructure = (
+    structure: AnyStructure
+): structure is StorableOrWithdrawableStructure => {
+    return (
+        structure instanceof StructureContainer ||
+        structure instanceof StructureStorage ||
+        structure instanceof StructureSpawn ||
+        structure instanceof StructureExtension
+    );
+};
+
+export const getWithdrawableOrStorableStructures = (room: Room) => {
+    return room
+        .find(FIND_STRUCTURES)
+        .filter(isWithdrawableOrStorableStructure)
+        .filter(s => (s.store.getFreeCapacity() ?? 0) > 0);
 };
