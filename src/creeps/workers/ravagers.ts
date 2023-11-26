@@ -1,4 +1,4 @@
-import { transfer } from 'creeps/actions/transfer';
+import { deposit } from 'creeps/actions/deposit';
 import { getCreepsArray, getUsefulRuins } from 'helpers/common';
 import { CreepRole } from 'types';
 
@@ -17,6 +17,6 @@ export const ravagersWorker = () => {
                 }
             }
         }
-        transfer(creep, RESOURCE_ENERGY);
+        deposit(creep, RESOURCE_ENERGY);
     }
 };

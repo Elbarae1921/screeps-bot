@@ -1,4 +1,4 @@
-export const transfer = (creep: Creep, resource: ResourceConstant) => {
+export const deposit = (creep: Creep, resource: ResourceConstant) => {
     const storableStructures = creep.room
         .find(FIND_STRUCTURES)
         .filter((s: any) => !!s.store)

@@ -1,5 +1,5 @@
 import { mine } from 'creeps/actions/mine';
-import { transfer } from 'creeps/actions/transfer';
+import { deposit } from 'creeps/actions/deposit';
 import { getCreepsArray } from 'helpers/common';
 import { CreepRole } from 'types';
 
@@ -10,7 +10,7 @@ export const minersWorker = () => {
             mine(creep);
         } else {
             if (creep.memory.target) delete creep.memory.target;
-            transfer(creep, RESOURCE_ENERGY);
+            deposit(creep, RESOURCE_ENERGY);
         }
     }
 };
