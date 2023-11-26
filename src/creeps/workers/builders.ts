@@ -97,7 +97,7 @@ export const buildersWorker = () => {
                     repair(creep, target);
                     if (
                         !PRIORITY_REPAIRS[target.structureType] ||
-                        PRIORITY_REPAIRS[target.structureType] > i + 1
+                        PRIORITY_REPAIRS[target.structureType] < i + 1
                     )
                         repairIndex++;
                     continue;
@@ -117,7 +117,7 @@ export const buildersWorker = () => {
                     build(creep, target);
                     if (
                         !PRIORITY_BUILDS[target.structureType] ||
-                        PRIORITY_BUILDS[target.structureType] > i + 1
+                        PRIORITY_BUILDS[target.structureType] < i + 1
                     )
                         buildIndex++;
                     continue;
