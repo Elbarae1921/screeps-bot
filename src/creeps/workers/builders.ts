@@ -102,6 +102,11 @@ export const buildersWorker = () => {
                         repairIndex++;
                     continue;
                 } else if (isConstructionSite(target)) {
+                    // drop construction if there are structures to be repaired
+                    if (getStructuresToBeRepaired(creep.room).length) {
+                        creep.memory.target = undefined;
+                        continue;
+                    }
                     const [newTarget, newBuildIndex] = getHigherPriorityConstructionSitesIfAny(
                         creep,
                         target,
@@ -122,20 +127,7 @@ export const buildersWorker = () => {
                     break;
                 }
             } else {
-                const constructionSites = getConstructionSites(creep.room);
-                if (constructionSites.length) {
-                    if (!constructionSites[buildIndex]) buildIndex = 0;
-                    const site = constructionSites[buildIndex];
-                    creep.memory.target = site.id;
-                    build(creep, site);
-                    if (
-                        !PRIORITY_BUILDS[site.structureType] ||
-                        PRIORITY_BUILDS[site.structureType] > i + 1
-                    )
-                        buildIndex++;
-                    continue;
-                }
-
+                // repairs first
                 const structuresToBeRepaired = getStructuresToBeRepaired(creep.room);
                 if (structuresToBeRepaired.length) {
                     if (!structuresToBeRepaired[repairIndex]) repairIndex = 0;
@@ -149,13 +141,27 @@ export const buildersWorker = () => {
                         repairIndex++;
                     continue;
                 }
+
+                const constructionSites = getConstructionSites(creep.room);
+                if (constructionSites.length) {
+                    if (!constructionSites[buildIndex]) buildIndex = 0;
+                    const site = constructionSites[buildIndex];
+                    creep.memory.target = site.id;
+                    build(creep, site);
+                    if (
+                        !PRIORITY_BUILDS[site.structureType] ||
+                        PRIORITY_BUILDS[site.structureType] > i + 1
+                    )
+                        buildIndex++;
+                    continue;
+                }
             }
             break;
         } else {
             if (creep.memory.shouldMine) {
                 temporaryMining(creep);
             } else {
-                withdraw(creep, RESOURCE_ENERGY, 50);
+                withdraw(creep, RESOURCE_ENERGY);
             }
         }
     }

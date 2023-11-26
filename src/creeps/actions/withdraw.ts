@@ -1,11 +1,17 @@
 import { allowWithdrawFromSpawn, oppositeDirection } from 'helpers/common';
 
-const isStoreStructure = (structure: AnyStructure): structure is AnyStoreStructure => {
-    return !!(structure as AnyStoreStructure).store;
+const isWithdrawableStructure = (
+    structure: AnyStructure
+): structure is StructureContainer | StructureStorage | StructureSpawn => {
+    return (
+        structure instanceof StructureContainer ||
+        structure instanceof StructureStorage ||
+        structure instanceof StructureSpawn
+    );
 };
 
-export const withdraw = (creep: Creep, resource: ResourceConstant, amount: number) => {
-    const withdrawableStructures = creep.room.find(FIND_STRUCTURES).filter(isStoreStructure);
+export const withdraw = (creep: Creep, resource: ResourceConstant) => {
+    const withdrawableStructures = creep.room.find(FIND_STRUCTURES).filter(isWithdrawableStructure);
 
     // prioritize withdrawal from containers
     const containers = withdrawableStructures.filter(
@@ -22,7 +28,7 @@ export const withdraw = (creep: Creep, resource: ResourceConstant, amount: numbe
         });
 
         if (target) {
-            const result = creep.withdraw(target, resource, amount);
+            const result = creep.withdraw(target, resource);
 
             if (result == ERR_NOT_IN_RANGE) {
                 return creep.moveTo(target);
@@ -42,7 +48,7 @@ export const withdraw = (creep: Creep, resource: ResourceConstant, amount: numbe
             });
 
             if (target) {
-                const result = creep.withdraw(target, resource, amount);
+                const result = creep.withdraw(target, resource);
 
                 if (result == ERR_NOT_IN_RANGE) {
                     return creep.moveTo(target);

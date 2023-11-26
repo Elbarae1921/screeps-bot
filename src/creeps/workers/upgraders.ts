@@ -22,7 +22,7 @@ export const upgradersWorker = () => {
                 if (creep.memory.shouldMine) {
                     temporaryMining(creep);
                 } else {
-                    withdraw(creep, RESOURCE_ENERGY, 50);
+                    withdraw(creep, RESOURCE_ENERGY);
                 }
             }
         }
